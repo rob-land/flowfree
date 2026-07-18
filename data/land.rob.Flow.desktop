@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Flow
+Comment=Connect the dots, fill the board
+Exec=flowfree
+Icon=land.rob.Flow
+Terminal=false
+Categories=Game;LogicGame;
+Keywords=flow;puzzle;pipes;
+X-Purism-FormFactor=Workstation;Mobile;

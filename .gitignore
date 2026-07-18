@@ -1,0 +1,17 @@
+# Original game package kept locally for reference — never commit
+*.xapk
+*.apk
+
+# Flatpak build outputs
+_flatpak_x86_64/
+_flatpak_aarch64/
+.flatpak-builder/
+repo/
+*.flatpak
+
+# Python
+__pycache__/
+*.pyc
+
+# Session tooling
+.claude/
