@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>land.rob.flow</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+
+  <name>Flow</name>
+  <summary>Connect the dots, fill the board</summary>
+
+  <description>
+    <p>
+      A pipe-connection puzzle game. Drag between matching pairs of colored
+      dots to connect them; pipes may not cross, and every cell of the board
+      must be filled to win.
+    </p>
+    <p>Features:</p>
+    <ul>
+      <li>Endless generated puzzles, 5×5 to 10×10 — always solvable, never wandering pipes</li>
+      <li>10 level packs with 165 fixed levels, including shaped boards: rectangles, crosses, octagons, courtyards</li>
+      <li>Daily puzzle sets seeded from the date, with a streak counter</li>
+      <li>Touch-friendly adaptive layout for phones and desktops</li>
+    </ul>
+  </description>
+
+  <launchable type="desktop-id">land.rob.flow.desktop</launchable>
+
+  <url type="homepage">https://github.com/rob-land/flowfree</url>
+  <url type="bugtracker">https://github.com/rob-land/flowfree/issues</url>
+  <url type="vcs-browser">https://github.com/rob-land/flowfree</url>
+
+  <provides>
+    <binary>flowfree</binary>
+  </provides>
+
+  <releases>
+    <release version="1.0.0" date="2026-07-18">
+      <description>
+        <p>Initial release.</p>
+      </description>
+    </release>
+  </releases>
+
+  <content_rating type="oars-1.1"/>
+
+  <requires>
+    <display_length compare="ge">360</display_length>
+  </requires>
+  <recommends>
+    <control>pointing</control>
+    <control>touch</control>
+  </recommends>
+</component>

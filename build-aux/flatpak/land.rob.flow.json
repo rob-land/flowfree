@@ -1,5 +1,5 @@
 {
-  "app-id": "land.rob.Flow",
+  "app-id": "land.rob.flow",
   "runtime": "org.gnome.Platform",
   "runtime-version": "50",
   "sdk": "org.gnome.Sdk",
@@ -16,8 +16,9 @@
       "buildsystem": "simple",
       "build-commands": [
         "install -Dm755 flowfree.py /app/bin/flowfree",
-        "install -Dm644 data/land.rob.Flow.desktop /app/share/applications/land.rob.Flow.desktop",
-        "install -Dm644 data/land.rob.Flow.svg /app/share/icons/hicolor/scalable/apps/land.rob.Flow.svg"
+        "install -Dm644 data/land.rob.flow.desktop /app/share/applications/land.rob.flow.desktop",
+        "install -Dm644 data/land.rob.flow.svg /app/share/icons/hicolor/scalable/apps/land.rob.flow.svg",
+        "install -Dm644 data/land.rob.flow.metainfo.xml /app/share/metainfo/land.rob.flow.metainfo.xml"
       ],
       "sources": [
         {

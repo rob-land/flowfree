@@ -21,7 +21,7 @@ gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 from gi.repository import Adw, GLib, Gtk  # noqa: E402
 
-APP_ID = "land.rob.Flow"
+APP_ID = "land.rob.flow"
 STATE_DIR = os.path.join(GLib.get_user_data_dir(), "flowfree")
 STATE_FILE = os.path.join(STATE_DIR, "state.json")
 

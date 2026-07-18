@@ -39,23 +39,28 @@ GNOME/Phosh systems. On Debian/Mobian: `apt install python3-gi gir1.2-adw-1`.
 
 ## Flatpak
 
-CI builds bundles on version tags (`v*`); grab `flowfree-x86_64.flatpak` /
-`flowfree-aarch64.flatpak` from the workflow artifacts, or build locally:
+Install from the shared signed repo (x86_64 and aarch64):
+
+```sh
+flatpak remote-add --user rob-land \
+  https://rob-land.github.io/flatpak-repo/rob-land.flatpakrepo
+flatpak install --user rob-land land.rob.flow
+```
+
+CI builds both arches natively on every push to main and uploads bundles
+plus OSTree repo tars to the rolling `continuous` release, which the
+[flatpak-repo](https://github.com/rob-land/flatpak-repo) aggregator
+merges, signs, and publishes. Direct-install bundles
+(`flowfree-<arch>.flatpak`) are on the continuous release; or build
+locally:
 
 ```sh
 ./build-all.sh              # both arches (aarch64 needs qemu binfmt)
 ./build-all.sh --install    # also install the host-arch bundle
 ```
 
-Install a bundle on the device:
-
-```sh
-flatpak install --user flowfree-aarch64.flatpak
-```
-
-Runtime: `org.gnome.Platform//50` (install from Flathub for the matching
-arch). Tests: `pytest tests/`.
+Runtime: `org.gnome.Platform//50`. Tests: `pytest tests/`.
 
 All progress (quick-play size, pack completion, daily streak) lives in
-`~/.local/share/flowfree/state.json` (under `~/.var/app/land.rob.Flow/`
+`~/.local/share/flowfree/state.json` (under `~/.var/app/land.rob.flow/`
 for the flatpak).
