@@ -31,7 +31,7 @@ possible. Up to 16 colors.
 ## Run from source
 
 ```sh
-python3 flowfree.py
+python3 flow.py
 ```
 
 Dependencies: `gtk4`, `libadwaita`, `python3-gobject` — preinstalled on
@@ -62,5 +62,5 @@ locally:
 Runtime: `org.gnome.Platform//50`. Tests: `pytest tests/`.
 
 All progress (quick-play size, pack completion, daily streak) lives in
-`~/.local/share/flowfree/state.json` (under `~/.var/app/land.rob.flow/`
+`~/.local/share/flow/state.json` (under `~/.var/app/land.rob.flow/`
 for the flatpak).

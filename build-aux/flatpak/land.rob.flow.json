@@ -15,7 +15,7 @@
       "name": "flow",
       "buildsystem": "simple",
       "build-commands": [
-        "install -Dm755 flowfree.py /app/bin/flow",
+        "install -Dm755 flow.py /app/bin/flow",
         "install -Dm644 data/land.rob.flow.desktop /app/share/applications/land.rob.flow.desktop",
         "install -Dm644 data/land.rob.flow.svg /app/share/icons/hicolor/scalable/apps/land.rob.flow.svg",
         "install -Dm644 data/land.rob.flow.metainfo.xml /app/share/metainfo/land.rob.flow.metainfo.xml"

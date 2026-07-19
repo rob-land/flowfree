@@ -9,7 +9,7 @@ import sys
 from datetime import date, timedelta
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-spec = importlib.util.spec_from_file_location("ff", os.path.join(HERE, "..", "flowfree.py"))
+spec = importlib.util.spec_from_file_location("ff", os.path.join(HERE, "..", "flow.py"))
 ff = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(ff)
 

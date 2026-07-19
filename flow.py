@@ -22,8 +22,15 @@ gi.require_version("Adw", "1")
 from gi.repository import Adw, GLib, Gtk  # noqa: E402
 
 APP_ID = "land.rob.flow"
-STATE_DIR = os.path.join(GLib.get_user_data_dir(), "flowfree")
+STATE_DIR = os.path.join(GLib.get_user_data_dir(), "flow")
 STATE_FILE = os.path.join(STATE_DIR, "state.json")
+
+# One-time migration from the pre-rename state directory ("...free").
+if not os.path.exists(STATE_DIR) and os.path.isdir(STATE_DIR + "free"):
+    try:
+        os.rename(STATE_DIR + "free", STATE_DIR)
+    except OSError:
+        pass
 
 # Classic bright palette on a dark board (16 colors, like the original).
 COLORS = [
