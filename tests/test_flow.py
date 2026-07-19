@@ -107,3 +107,45 @@ def test_pipes_blocked_by_holes_and_dots():
     for ep in b.endpoints[other]:
         if ff.adjacent(start, ep):
             assert not b.try_step(ep)
+
+
+def test_protect_completed_pipes():
+    for protect in (True, False):
+        tested = False
+        for seed in range(40):
+            b = ff.Board(("square", 6), seed, "normal", protect=protect)
+            colors = list(b.solution)
+            c0 = colors[0]
+            b.paths[c0] = list(b.solution[c0])  # completed flow
+            assert b.flow_done(c0)
+            mid = b.solution[c0][1:-1]
+            for c1 in colors[1:]:
+                a = b.endpoints[c1][0]
+                hit = [m for m in mid if ff.adjacent(a, m)]
+                if not hit:
+                    continue
+                b.grab(a)
+                before = list(b.paths[c0])
+                stepped = b.try_step(hit[0])
+                if protect:
+                    assert not stepped and b.paths[c0] == before
+                else:
+                    assert stepped and len(b.paths[c0]) < len(before)
+                tested = True
+                break
+            if tested:
+                break
+        assert tested, f"no adjacency found to exercise protect={protect}"
+        # incomplete pipes still get cut even when protection is on
+    b = ff.Board(("square", 6), 3, "normal", protect=True)
+    colors = list(b.solution)
+    c0 = colors[0]
+    b.paths[c0] = list(b.solution[c0][:-1])  # one short of done
+    assert not b.flow_done(c0)
+    for c1 in colors[1:]:
+        a = b.endpoints[c1][0]
+        hit = [m for m in b.solution[c0][1:-2] if ff.adjacent(a, m)]
+        if hit:
+            b.grab(a)
+            assert b.try_step(hit[0]), "incomplete pipe should still be cuttable"
+            break

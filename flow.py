@@ -373,9 +373,10 @@ def current_streak(state, today):
 # --------------------------------------------------------------------- board
 
 class Board:
-    def __init__(self, spec, seed, difficulty="normal"):
+    def __init__(self, spec, seed, difficulty="normal", protect=False):
         self.spec = spec
         self.seed = seed
+        self.protect = protect  # completed pipes can't be cut by other colors
         self.cells = frozenset(shape_cells(spec))
         self.rows = max(r for r, _ in self.cells) + 1
         self.cols = max(c for _, c in self.cells) + 1
@@ -460,6 +461,8 @@ class Board:
             return True
         for c2, p2 in self.paths.items():  # cut through other pipes
             if c2 != c and nxt in p2:
+                if self.protect and self.flow_done(c2):
+                    return False  # finished pipes are locked in place
                 del p2[p2.index(nxt) :]
         p.append(nxt)
         return True
@@ -503,7 +506,14 @@ class GamePage(Adw.NavigationPage):
         self.win = win
         self.mode = mode
 
+        # Board drags must never trigger the navigation back-swipe; popping
+        # is disabled and only the explicit back button leaves the game.
+        self.set_can_pop(False)
+
         header = Adw.HeaderBar()
+        back = Gtk.Button(icon_name="go-previous-symbolic", tooltip_text="Back")
+        back.connect("clicked", self.on_back)
+        header.pack_start(back)
         hint_btn = Gtk.Button(label="Hint", tooltip_text="Solve one flow")
         hint_btn.connect("clicked", self.on_hint)
         header.pack_end(hint_btn)
@@ -551,9 +561,14 @@ class GamePage(Adw.NavigationPage):
         return (spec, seed, diff,
                 f"Daily · {m['idx'] + 1}/{len(m['levels'])}")
 
+    def on_back(self, _btn):
+        self.set_can_pop(True)
+        self.win.nav.pop()
+
     def load_level(self):
         spec, seed, diff, title = self.level_params()
-        self.board = Board(spec, seed, diff)
+        self.board = Board(spec, seed, diff,
+                           protect=self.win.state.get("protect", True))
         self.set_title(title)
         if self.mode["kind"] == "quick":
             self.win.state["seed"] = seed
@@ -628,6 +643,9 @@ class GamePage(Adw.NavigationPage):
     # -- input ---------------------------------------------------------------
 
     def on_drag_begin(self, g, x, y):
+        # Claim the touch sequence so no other controller (e.g. swipe
+        # trackers) can steal a drag that started on the board.
+        g.set_state(Gtk.EventSequenceState.CLAIMED)
         self.drag_origin = (x, y)
         if self.board.solved:
             self.next_level()
@@ -873,9 +891,24 @@ class HomePage(Adw.NavigationPage):
             self.pack_list.append(row)
         box.append(self.pack_list)
 
+        opts = Gtk.ListBox(selection_mode=Gtk.SelectionMode.NONE)
+        opts.add_css_class("boxed-list")
+        protect = Adw.SwitchRow(
+            title="Protect completed pipes",
+            subtitle="Swiping across a finished pipe won't cut it",
+        )
+        protect.set_active(win.state.get("protect", True))
+        protect.connect("notify::active", self.on_protect)
+        opts.append(protect)
+        box.append(opts)
+
         view.set_content(Gtk.ScrolledWindow(child=Adw.Clamp(child=box)))
         self.set_child(view)
         self.refresh()
+
+    def on_protect(self, row, _p):
+        self.win.state["protect"] = row.get_active()
+        self.win.save_state()
 
     def on_size(self, dd, _p):
         self.win.state["size"] = dd.get_selected() + 5
@@ -922,6 +955,7 @@ class FlowWindow(Adw.ApplicationWindow):
         s.setdefault("wins", 0)
         s.setdefault("seed", None)
         s.setdefault("packs", {})
+        s.setdefault("protect", True)
         return s
 
     def save_state(self):

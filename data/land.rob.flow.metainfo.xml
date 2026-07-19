@@ -33,6 +33,13 @@
   </provides>
 
   <releases>
+    <release version="1.1.0" date="2026-07-19">
+      <description>
+        <p>Board drags no longer trigger the back-swipe gesture, and a new
+        option (on by default) protects completed pipes from being cut by
+        accidental swipes.</p>
+      </description>
+    </release>
     <release version="1.0.0" date="2026-07-18">
       <description>
         <p>Initial release.</p>
