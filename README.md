@@ -51,7 +51,7 @@ CI builds both arches natively on every push to main and uploads bundles
 plus OSTree repo tars to the rolling `continuous` release, which the
 [flatpak-repo](https://github.com/rob-land/flatpak-repo) aggregator
 merges, signs, and publishes. Direct-install bundles
-(`flowfree-<arch>.flatpak`) are on the continuous release; or build
+(`flow-<arch>.flatpak`) are on the continuous release; or build
 locally:
 
 ```sh

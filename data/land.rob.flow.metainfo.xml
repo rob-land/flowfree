@@ -24,12 +24,12 @@
 
   <launchable type="desktop-id">land.rob.flow.desktop</launchable>
 
-  <url type="homepage">https://github.com/rob-land/flowfree</url>
-  <url type="bugtracker">https://github.com/rob-land/flowfree/issues</url>
-  <url type="vcs-browser">https://github.com/rob-land/flowfree</url>
+  <url type="homepage">https://github.com/rob-land/flow</url>
+  <url type="bugtracker">https://github.com/rob-land/flow/issues</url>
+  <url type="vcs-browser">https://github.com/rob-land/flow</url>
 
   <provides>
-    <binary>flowfree</binary>
+    <binary>flow</binary>
   </provides>
 
   <releases>

@@ -86,15 +86,15 @@ jobs:
       - name: Bundle
         run: |
           flatpak build-bundle --arch=${{ matrix.arch }} repo \
-            "flowfree-${{ matrix.arch }}.flatpak" "$APP_ID"
+            "flow-${{ matrix.arch }}.flatpak" "$APP_ID"
 
       - name: Pack the OSTree repo for the aggregator
         run: tar -cf "repo-${{ matrix.arch }}.tar" -C repo .
 
       - uses: actions/upload-artifact@v7
         with:
-          name: flowfree-${{ matrix.arch }}.flatpak
-          path: flowfree-${{ matrix.arch }}.flatpak
+          name: flow-${{ matrix.arch }}.flatpak
+          path: flow-${{ matrix.arch }}.flatpak
 
       - uses: actions/upload-artifact@v7
         with:
@@ -122,7 +122,7 @@ jobs:
             --latest=false 2>/dev/null || true
           gh release upload continuous --repo "$GITHUB_REPOSITORY" --clobber \
             repo-x86_64.tar repo-aarch64.tar \
-            flowfree-x86_64.flatpak flowfree-aarch64.flatpak
+            flow-x86_64.flatpak flow-aarch64.flatpak
 
       - name: Nudge the aggregator (best-effort)
         env:

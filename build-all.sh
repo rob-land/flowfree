@@ -7,8 +7,8 @@
 #   ./build-all.sh --install        # also install host-arch bundle (--user)
 #
 # Outputs:
-#   flowfree-x86_64.flatpak
-#   flowfree-aarch64.flatpak
+#   flow-x86_64.flatpak
+#   flow-aarch64.flatpak
 
 set -euo pipefail
 
@@ -44,7 +44,7 @@ mkdir -p repo
 # ── Build + bundle each arch ──────────────────────────────────────────────
 for arch in "${ARCHES[@]}"; do
     builddir="_flatpak_${arch}"
-    bundle="flowfree-${arch}.flatpak"
+    bundle="flow-${arch}.flatpak"
     echo
     echo "==== Building Flow for ${arch} ===="
     flatpak-builder --arch="$arch" --repo=repo --force-clean \
@@ -56,7 +56,7 @@ done
 
 # ── Optional: install the host-arch bundle ────────────────────────────────
 if $INSTALL; then
-    bundle="flowfree-${HOST_ARCH}.flatpak"
+    bundle="flow-${HOST_ARCH}.flatpak"
     if [[ -f "$bundle" ]]; then
         echo
         echo "==== Installing $bundle ===="
